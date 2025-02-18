@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignUp Page</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 1 rem;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Body Styling */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(46deg, rgb(246, 228, 207), transparent);
+        }
+
+        /* Container Styling */
+        .container {
+            background-color: #fff;
+            padding: 1.5rem;
+            width: 100%;
+            max-width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Title Styling */
+        .container h3 {
+            margin-bottom: 1rem;
+            text-align: center;
+            color: #333;
+        }
+
+        /* Input Group Styling */
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            margin-top: 0.5rem;
+            font-size: 1rem;
+            color: black;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+        }
+
+        /* Button Styling */
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 0.8rem;
+            border: none;
+            background: green;
+            color: black;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .btn:hover {
+            background: darkgreen;
+        }
+
+        /* Flash Message Styling */
+        .alert {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid transparent;
+            border-radius: 5px;
+            font-size: 1rem;
+            margin-top: 1rem;
+        }
+
+        /* Success Message */
+        .alert-success {
+            color: #155724;
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+
+        /* Error Message */
+        .alert-error {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+
+        /* Info Message */
+        .alert-info {
+            color: #0c5460;
+            background-color: #d1ecf1;
+            border-color: #bee5eb;
+        }
+        a{
+            color: green;
+            text-decoration: none;
+        }
+        .small-text{
+            margin-top: 1rem;
+        }
+
+       
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>SignUp Page</h3>
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <div id="flash-messages">
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+        <!-- Signup Form -->
+        <form action="/signup" method="POST" onsubmit="return validateEmail()">
+            <div class="form-group">
+                <label for="name">Username:</label>
+                <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Create a password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm-password">Confirm Password:</label>
+                <input type="password" id="confirm-password" name="confirm_password" placeholder="Confirm your password" required>
+            </div>
+            <button type="submit" class="btn">SignUp</button>
+        </form>
+        <p class="small-text">Already have an account? <a href="/login">Login Here</a></p>
+    </div>
+
+    <script>
+        function validateEmail() {
+            var email = document.getElementById('email').value;
+            if (!email.includes('@ghcl.co.in')) {
+                alert('Only official email (@ghcl.co.in) is allowed.');
+                return false; // Prevent form submission
+            }
+            return true; // Allow form submission
+        }
+
+        // Hide flash message after 5 seconds
+        window.onload = function() {
+            setTimeout(function() {
+                var flashMessages = document.getElementById('flash-messages');
+                if (flashMessages) {
+                    flashMessages.style.display = 'none';
+                }
+            }, 5000); // 5000ms = 5 seconds
+        }
+    </script>
+</body>
+</html>

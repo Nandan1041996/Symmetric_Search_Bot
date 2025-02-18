@@ -1,0 +1,191 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validate Email</title>
+    <style>
+        
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Enter Verification Token</h1>
+    <p>Email: {{ email }}</p>
+    <form action="/validate_mail_reset_password?email={{ email }}" method="POST">
+        <label for="token">Verification Token:</label>
+        <input type="text" name="token" id="token" required>
+        <button type="submit">Verify</button>
+    </form>
+</div>
+</body>
+</html> -->
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validate Email</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Body Styling */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(46deg, rgb(246, 228, 207), transparent);
+            overflow: hidden;
+        }
+
+        /* Container Styling */
+        .container {
+            background-color: #fff;
+            padding: 2rem;
+            width: 100%;
+            max-width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .container h3 {
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        /* Form Group Styling */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            font-size: 1rem;
+            display: block;
+            margin-bottom: 0.5rem;
+            color: black;
+        }
+
+        .form-group input {
+            font-size: 1rem;
+            padding: 0.8rem;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .form-group input:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+        }
+
+        /* Button Styling */
+        .btn {
+            display: block;
+            padding: 0.8rem;
+            width: 100%;
+            font-size: 1rem;
+            color: black;
+            border-radius: 5px;
+            background: green;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            border: none;
+        }
+
+        .btn:hover {
+            background: darkgreen;
+        }
+
+        /* Flash Message Styling */
+        .flash {
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        .flash.error {
+            color: #721c24;
+            background-color: #f8d7da; /* Yellow background for error messages */
+            border: 1px solid #f5c6cb;
+        }
+
+        .flash.success {
+            color: #155724;
+            background-color: #d4edda; /* Green background for success messages */
+            border: 1px solid #c3e6cb;
+        }
+
+        .flash.info {
+            color: #0c5460;
+            background-color: #d1ecf1; /* Blue background for info messages */
+            border: 1px solid #bee5eb;
+        }
+
+        h3 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>Enter Verification Code</h3>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div>
+                    {% for category, message in messages %}
+                        <div class="flash {{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Email Display -->
+        <p style="text-align: left; margin-bottom: 1rem; margin-top: 1rem">Email: {{ email }}</p>
+
+        <!-- Verification Token Form -->
+        <form action="/validate_mail_reset_password?email={{ email }}" method="POST">
+            <div class="form-group">
+                <label for="token">Verification Code:</label>
+                <input type="text" name="token" id="token" required placeholder="Enter the verification token">
+            </div>
+            <button type="submit" class="btn">Verify</button>
+        </form>
+
+        <!-- <p class="small-text" style="text-align: center; margin-top: 1.5rem;">Didn't receive the token? <a href="/resend_token">Resend</a></p> -->
+    </div>
+
+    <!-- JavaScript to Hide Flash Messages After 3 Seconds -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Get all flash message elements
+            const flashMessages = document.querySelectorAll('.flash');
+            flashMessages.forEach(function(message) {
+                // Set a timer to remove the flash message after 3 seconds
+                setTimeout(function() {
+                    message.style.display = 'none';
+                }, 3000); // 3000 milliseconds = 3 seconds
+            });
+        });
+    </script>
+
+</body>
+</html>
