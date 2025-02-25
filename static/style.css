@@ -104,7 +104,8 @@ textarea {
     font-weight: bold; /* Make the arrow thicker */
     display: flex; /* Use flexbox for centering */
     justify-content: center; /* Center horizontally */
-    align-items: flex-start; /* Align items to the top of the button */
+    /* align-items: flex-start;  */
+    align-items:anchor-center;
     transition: background 0.3s ease; /* Transition for hover effect */
     z-index: 1; /* Bring the button above the textarea */
     line-height: 0; /* Adjust line height to help center the arrow */
@@ -164,15 +165,18 @@ button:hover {
     background: darkgreen;
 }
 
- select {
-     width: 94%; /* Ensure select takes up full width */
-     border-radius: 5px;
-     border: 1px solid #ccc;
-     background: #fff;
-     padding: 10px;
-     /* padding-left: 10px; */
-     box-sizing: border-box;
- }
+select {
+    width: 94%; /* Ensure select takes up full width */
+    margin-top: 45px;
+    margin-left: -10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background: #fff;
+    padding: 10px;
+    /* padding-left: 10px; */
+    box-sizing: border-box;
+}
+
  .chat-box {
      margin-top: px; /* Reduced top margin */
      width: 100%; /* Reduced width */
