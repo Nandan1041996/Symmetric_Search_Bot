@@ -71,11 +71,13 @@ def get_files_from_google_drive():
             if files:
                 files_with_id_dict = {}
                 for file in files:
-                    files_with_id_dict[file['name']] = file['id']
-                    print(f"File Name: {file['name']}, File ID: {file['id']}")
+                    if file['name'].endswith(allowed_extensions):
+                        files_with_id_dict[file['name']] = file['id']
+                        print(f"File Name: {file['name']}, File ID: {file['id']}")
+                print('file:',files_with_id_dict)
+                # # Get the list of files with allowed extensions
+                # files = [os.path.basename(f) for f in [key for key,val in files_with_id_dict.items() if key.endswith(allowed_extensions)]]
 
-                # Get the list of files with allowed extensions
-                files = [os.path.basename(f) for f in [key for key,val in files_with_id_dict.items()]if f.endswith(allowed_extensions)]
                 return files_with_id_dict
             else:
                 raise FolderNotAvailable()
@@ -136,46 +138,42 @@ def vector_search(vector1,vector2):
 
 
 def insert_data_in_db(model,doc_id,file_name,table_name):
-    try:
-        pg_table = table_name.lower()
-        # service = build('drive', 'v3', credentials=credentials)
-        # # Get available CSV files from Google Drive
-        # files_with_ids = get_files_from_google_drive()
+    
+    pg_table = table_name.lower()
+    # service = build('drive', 'v3', credentials=credentials)
+    # # Get available CSV files from Google Drive
+    # files_with_ids = get_files_from_google_drive()
 
-        if file_name.split('.')[1] == 'csv':
-            df = load_csv_file_data(doc_id)
-        else:
-            df = load_excel_file_data(doc_id)
+    if file_name.split('.')[1] == 'csv':
+        df = load_csv_file_data(doc_id)
+    else:
+        df = load_excel_file_data(doc_id)
+    print('columns:::::',df.columns)
+    que_lst = df['Question'].to_list()
+    # Convert text to embeddings
+    embeddings = model.encode(que_lst)
+    
+    # vectorstring conversation 
+    str_embed = [str(i.tolist()) for i in embeddings]
+    
+    df['embedding'] = str_embed
+    print('df:',df)
+    #Convert DataFrame to CSV format (in-memory)
+    csv_buffer = StringIO()
+    df.to_csv(csv_buffer, index=False, header=False,sep='|')  # No index, no headers
+    csv_buffer.seek(0)  # Move to start
+    conn = sql_connection()
+    cursor = conn.cursor()
 
-        que_lst = df['Question'].to_list()
-        # Convert text to embeddings
-        embeddings = model.encode(que_lst)
-        
-        # vectorstring conversation 
-        str_embed = [str(i.tolist()) for i in embeddings]
-        
-        df['embedding'] = str_embed
-        #Convert DataFrame to CSV format (in-memory)
-        csv_buffer = StringIO()
-        df.to_csv(csv_buffer, index=False, header=False,sep='|')  # No index, no headers
-        csv_buffer.seek(0)  # Move to start
-        conn = sql_connection()
-        cursor = conn.cursor()
+    pg_table = table_name.lower()
+    print(pg_table)
+    # Copy CSV buffer into PostgreSQL table
+    cursor.copy_from(csv_buffer, pg_table, sep='|', columns=['question','answer','embedding'])
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return 0
 
-        pg_table = table_name.lower()
-        print(pg_table)
-        # Copy CSV buffer into PostgreSQL table
-        cursor.copy_from(csv_buffer, pg_table, sep='|', columns=['question','answer','embedding'])
-        conn.commit()
-        cursor.close()
-        conn.close()
-        return 0
-    except Exception as e:
-        print(e)
-        conn.rollback()
-        cursor.close()
-        conn.close()
-        return 1
 
 
 def check_status_of_table_in_db(table_name):
@@ -503,7 +501,8 @@ def get_ans_from_csv():
     email = session['email']
     
     query_text = request.form.get("query_text")
-    selected_language = request.form.get("selected_language")
+    # selected_language = request.form.get("selected_language")
+    # selected_language = 'en'
     doc_file = request.form.get('selected_file')
     print('doc_file:',doc_file)
 
@@ -524,6 +523,12 @@ def get_ans_from_csv():
 
             if similarity_score >= 0.8:
                 answer = ans
+                # # Translate if needed
+                # if selected_language != 'en':
+                #     if selected_language in ['gu', 'hi', 'ta']:
+                #         answer = GoogleTranslator(source='en', target=selected_language).translate(ans)
+                # else:
+                #     answer = ans
 
             elif 0.4 <= similarity_score < 0.8:
                 similar_question = get_similar_questions(table_name, query_embedding)
@@ -536,14 +541,8 @@ def get_ans_from_csv():
                     answer = f'{question_part}:<br>{links_html}'
                 else:
                     answer = "No similar questions found."
-
             else:
                 answer = "Not Found."
-
-            # Translate if needed
-            if selected_language != 'en':
-                if selected_language in ['gu', 'hi', 'ta']:
-                    answer = GoogleTranslator(source='en', target=selected_language).translate(answer)
 
             return jsonify({'answer': answer})
     else:
