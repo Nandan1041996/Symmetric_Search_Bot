@@ -19,7 +19,7 @@ from sentence_transformers import SentenceTransformer
 from deep_translator import GoogleTranslator
 from flask import Flask,request,render_template,jsonify,flash,redirect,url_for,session
 
-SERVICE_ACCOUNT_FILE = r'C:\Users\G01889\OneDrive\Documents\git_llm_project\GHCL_Bot\midyear-pattern-444505-m8-f12b199c3f9d.json'
+SERVICE_ACCOUNT_FILE = './token_cred.json'
 # Define scopes for Google Drive API
 SCOPES = ['https://www.googleapis.com/auth/drive','https://www.googleapis.com/auth/spreadsheets']
 # Shared credentials for all users
@@ -754,7 +754,7 @@ def save_feedback():
 
 
 if __name__=='__main__':
-    app.run(debug=False)
+    app.run(host='0.0.0.0',port=5010)
 
 
 
