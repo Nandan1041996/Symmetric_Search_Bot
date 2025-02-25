@@ -1,12 +1,9 @@
-
-
-       
-document.addEventListener('DOMContentLoaded', function () {
+ document.addEventListener('DOMContentLoaded', function () {
     const askButton = document.getElementById('ask-question-btn');
     const resultBox = document.getElementById('result-box');
     const loaderContainer = document.getElementById('loader-container');
     const selectedFile = document.getElementById('selected_file');
-    const selectedLanguage = document.getElementById('selected_language');
+    // const selectedLanguage = document.getElementById('selected_language');
     const queryText = document.getElementById('query_text');
     const docSelectionMessage = document.getElementById('doc-selection-message');
 
@@ -54,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     
     function updateButtonVisibility() {
-        askButton.style.display = (selectedFile.value !== '' && selectedLanguage.value !== '') ? 'block' : 'none';
+        askButton.style.display = (selectedFile.value !== '') ? 'block' : 'none';
     }
 
     // Convert URLs in text to clickable hyperlinks
@@ -104,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const formData = new FormData();
         formData.append('query_text', queryText.value);
         formData.append('selected_file', selectedFile.value);
-        formData.append('selected_language', selectedLanguage.value);
+        // formData.append('selected_language', selectedLanguage.value);
 
         fetch('/ask', {
             method: 'POST',
@@ -258,9 +255,9 @@ document.querySelectorAll('.feedback.wrong').forEach((wrongButton, index) => {
         updateButtonVisibility();
     });
 
-    selectedLanguage.addEventListener('change', function () {
-        updateButtonVisibility();
-    });
+    // selectedLanguage.addEventListener('change', function () {
+    //     updateButtonVisibility();
+    // });
 
     // Initialize button visibility on page load
     updateButtonVisibility();
