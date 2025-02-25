@@ -23,7 +23,7 @@
                <!-- Select Document and Language Section -->
                <div class="form-group">
                    <select id="selected_file" name="selected_file" required>
-                       <option value="">Select a document</option>
+                       <!-- <option value="">Select a document</option> -->
                        {% for file in files %}
                            <option value="{{ file }}">{{ file }}</option>
                        {% endfor %}
@@ -31,14 +31,6 @@
                    <span id="doc-selection-message" class="doc-selection-message"></span>
                </div>
                <div class="form-group">
-                <div class="language">
-<!--                    <select id="selected_language" name="selected_language" required>
-                       <option value="en">English</option>
-                       <option value="gu">Gujarati</option>
-                       <option value="hi">Hindi</option>
-                       <option value="ta">Tamil</option>
-                   </select> -->
-               </div>
             </div>
            </div>
    
