@@ -1,4 +1,7 @@
- document.addEventListener('DOMContentLoaded', function () {
+
+
+       
+document.addEventListener('DOMContentLoaded', function () {
     const askButton = document.getElementById('ask-question-btn');
     const resultBox = document.getElementById('result-box');
     const loaderContainer = document.getElementById('loader-container');
