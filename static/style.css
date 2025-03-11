@@ -13,7 +13,8 @@ body {
     max-width: 1200px;
     margin: 15px auto;
     /* background: #fff; */
-    background: #fffff0;
+    /* background: #fffff0;  */
+    background:  white;
     /* background: linear-gradient(45deg, black, transparent); */
     padding: 20px;
     border-radius: 8px;
@@ -50,7 +51,8 @@ body {
      gap: -10px;
      margin-left: 0px;
      /* background-color: transparent; */
-     background-color: rgb(246, 228, 207);
+     /* background-color: rgb(246, 228, 207);   */
+     background-color: white; 
      padding-left: 15px;
  }
  .right-panel {
@@ -60,7 +62,7 @@ body {
      margin-left: 0px;
  }
  .form-group {
-     margin-bottom: 50px;
+     margin-bottom: 40px;
  }
  input[type="file"] {
      width: 80%; /* Medium size */
@@ -83,7 +85,7 @@ textarea {
     border: 1px solid #ccc; /* Border */
     border-radius: 28px; /* Rounded corners */
     /* background: #fff; White background */
-    background: hsl(0, 14%, 97%); /* White background */
+    background: white; /* White background */
     box-sizing: border-box; /* Include padding and border in width/height */
     font-size: 15px; /* Font size */
     resize: none; /* Prevent resizing */
@@ -167,7 +169,7 @@ button:hover {
 
 select {
     width: 94%; /* Ensure select takes up full width */
-    margin-top: 45px;
+    margin-top: -45px;
     margin-left: -10px;
     border-radius: 5px;
     border: 1px solid #ccc;
@@ -224,7 +226,7 @@ select {
  #chatbox-container {
      height: 440px; /* Adjust this as needed based on your layout */
      width: 100%; /* Full width of the container */
-     border: 1px solid #ccc;
+     border: 0px solid #ccc;
      border-top-right-radius: 8px;
      border-bottom-right-radius: 8px;
      padding: 10px;
@@ -262,14 +264,17 @@ select {
  }
  
  .message-block .user {
-     background: #e0f7fa;
-     color: #00796b;
+     /* background: #e0f7fa;
+     color: #00796b; */
+     background: aliceblue;
+     color: black;
      margin-left: auto; /* Aligns the user message to the right */
      text-align: right; /* Aligns text within the user message to the right */
+     /* font-weight:bold; */
  }
  
  .message-block .bot {
-     background: #c8e6c9;
+     background: #f3fbf4;
      color: black;
      margin-right: auto; /* Aligns the bot message to the left */
      text-align: left; /* Aligns text within the bot message to the left */
@@ -376,10 +381,10 @@ margin-top: 5px; /* Space above error message */
 }
 
 img{
-height: 200px;
-width: 200px;
-margin-left: 36px;
-margin-top: 8px;
+height: 350px;
+width: 300px;
+margin-left: -26px;
+margin-top: 0px;
 }
 
 .language{
@@ -392,7 +397,7 @@ margin-top: 45px;
 /* clear button */
 .clear-btn {
     position: absolute;
-    bottom: 145px; 
+    bottom: 108px; 
     right: 25px; 
     padding: 5px 10px;  /* Adjusted to only take minimal space around the text */
     background-color: green; 
