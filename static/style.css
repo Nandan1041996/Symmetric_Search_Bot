@@ -62,7 +62,7 @@ body {
      margin-left: 0px;
  }
  .form-group {
-     margin-bottom: 40px;
+     margin-bottom: 20px;
  }
  input[type="file"] {
      width: 80%; /* Medium size */
@@ -226,7 +226,7 @@ select {
  #chatbox-container {
      height: 440px; /* Adjust this as needed based on your layout */
      width: 100%; /* Full width of the container */
-     border: 0px solid #ccc;
+     border: 1px solid #ccc;
      border-top-right-radius: 8px;
      border-bottom-right-radius: 8px;
      padding: 10px;
@@ -384,7 +384,7 @@ img{
 height: 350px;
 width: 300px;
 margin-left: -26px;
-margin-top: 0px;
+margin-top: -9px;
 }
 
 .language{
@@ -397,7 +397,7 @@ margin-top: 45px;
 /* clear button */
 .clear-btn {
     position: absolute;
-    bottom: 108px; 
+    bottom: 188px; 
     right: 25px; 
     padding: 5px 10px;  /* Adjusted to only take minimal space around the text */
     background-color: green; 
@@ -419,4 +419,13 @@ margin-top: 45px;
 
 .clear-btn:focus {
     outline: none; 
+}
+
+
+
+.image{
+    height: 110px;
+    width: 270px;
+    margin-left: -12px;
+    margin-top: 9px;
 }
