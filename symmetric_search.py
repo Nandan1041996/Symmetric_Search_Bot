@@ -753,6 +753,22 @@ def save_feedback():
     return jsonify({'message': 'Feedback saved successfully'}), 200
 
 
+# Manual Count Endpoint
+@app.route('/count')
+def count():
+    metrics_string = generate_latest().decode('utf-8')
+    print(metrics_string)
+
+    api_counts = extract_api_counts(metrics_string)
+    
+    count_dicti = {}
+    # Display the counts for all found endpoints and methods
+    for endpoint, methods in api_counts.items():
+        for method, count in methods.items():
+            count_dicti[endpoint+'-'+method] = count
+
+    return render_template('chart.html', api_counts=count_dicti)
+
 if __name__=='__main__':
     app.run(host='0.0.0.0',port=5010)
 
